@@ -1,6 +1,7 @@
-from Color import Color
-from PositionValidationStrategy import PositionValidationStrategy
+from .Color import Color
+from .PositionValidationStrategy import PositionValidationStrategy
 
+# Piece model
 class Piece:
     def __init__(self, params):
         self.type = params.get('type')
@@ -10,10 +11,11 @@ class Piece:
         self.validation_strategy = params.get('validation_strategy')
         self.is_dead = False
 
-
+    # Checks if a move is possible
     def is_valid_move(self, board, col, row):
         return self.validation_strategy.is_valid_move(self, board, row, col)
         
+    # Move a position piece on the board
     def move(self, board, col, row):
         existing_piece = board[col][row]
         if existing_piece is not None:

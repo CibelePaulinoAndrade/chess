@@ -1,6 +1,7 @@
 from enum import Enum
-from Color import Color
+from .Color import Color
 
+# Enum for the pieces, their colors and their symbols
 class PieceType(Enum):
     ROOK = 'rook'
     KNIGHT = 'knight'
@@ -10,7 +11,6 @@ class PieceType(Enum):
     PAWN = 'pawn'
 
     def symbol_for_color(self, color):
-
         unicode_chars = {
             Color.WHITE: {
                 PieceType.ROOK: '♖',

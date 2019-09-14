@@ -1,8 +1,15 @@
-from Piece import Piece
-from Color import Color
-from PieceType import PieceType
-from PositionValidationStrategy import *
+from .Piece import Piece
+from .Color import Color
+from .PieceType import PieceType
 
+from .Strategies.RookValidationStrategy import RookValidationStrategy
+from .Strategies.BishopValidationStrategy import BishopValidationStrategy
+from .Strategies.KingValidationStrategy import KingValidationStrategy
+from .Strategies.KnightValidationStrategy import KnightValidationStrategy
+from .Strategies.PawnValidationStrategy import PawnValidationStrategy
+from .Strategies.QueenValidationStrategy import QueenValidationStrategy
+
+# Board Model
 class Board:
     def __init__(self):
         self.board = {}
@@ -11,7 +18,6 @@ class Board:
 
     # Creates the board and sets up the pieces
     def setup_game(self):
-        # Create self.board
         # self.board is [col][row] instead of [row][col] due to chess conventions
         # i.e. A3 is the first square on the first column, 3rd row
         
