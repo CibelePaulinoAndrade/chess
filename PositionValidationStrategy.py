@@ -8,44 +8,6 @@ class PositionValidationStrategy(ABC):
 
 
 class PawnValidationStrategy(PositionValidationStrategy):
-    def is_valid_move2(self, piece, board, destinyRow, destinyCol):
-        if piece.color == Color.WHITE:
-            if destinyRow <= piece.row:
-                return False
-        else:
-            if destinyRow >= piece.row:
-                return False
-
-        pieceNumberCol = ord(piece.col)
-        destinyNumberCol = ord(destinyCol)
-
-        diffX, diffY = board.distance_to_positions(pieceNumberCol, piece.row, destinyNumberCol, destinyRow)
-        signalX, signalY = board.direction_to_position(pieceNumberCol, piece.row, destinyNumberCol, destinyRow)
-
-        pieceOnDestiny = board.board[destinyCol][destinyRow]
-        if pieceOnDestiny and pieceOnDestiny.color == piece.color:
-            return False
-
-        if destinyNumberCol == pieceNumberCol:
-            if (diffY == 2 and piece.row != 2 and piece.row != 7) or diffY > 2:
-                return False
-            for i in range(1, diffX+1):
-                positionX = chr(pieceNumberCol)
-                positionY = piece.row + (i*signalY)
-
-                if board.board[positionX][positionY] != None:
-                    return False
-
-            return True
-
-        if diffX > 1 or diffY > 1:
-            return False
-
-        if board.board[destinyCol][destinyRow] != None:
-            return True 
-
-        return False   
-
     def is_valid_move(self, piece, board, destinyRow, destinyCol):
         if piece.color == Color.WHITE:
             if destinyRow <= piece.row:
@@ -76,13 +38,11 @@ class PawnValidationStrategy(PositionValidationStrategy):
         for i in range(1, diffY+1):
             positionX = chr(pieceNumberCol)
             positionY = piece.row + (i*signalY)
-            print(positionX, positionY, board.board[positionX][positionY])
             if board.board[positionX][positionY] != None:
                 return False
 
         return True
 
-    
 class KnightValidationStrategy(PositionValidationStrategy):
     def is_valid_move(self, piece, board, destinyRow, destinyCol):
         
