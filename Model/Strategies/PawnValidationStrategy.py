@@ -3,49 +3,49 @@ from Model.PositionValidationStrategy import PositionValidationStrategy
 
 # Validate pawn movement
 class PawnValidationStrategy(PositionValidationStrategy):
-    def is_valid_move(self, piece, board, destinyRow, destinyCol):
+    def is_valid_move(self, piece, board, destiny_row, destiny_col):
 
         # check if the target position is forward in the piece
         if piece.color == Color.WHITE:
-            if destinyRow <= piece.row:
+            if destiny_row <= piece.row:
                 return False
         else:
-            if destinyRow >= piece.row:
+            if destiny_row >= piece.row:
                 return False
 
         # get a numeric representation of col`s values
-        pieceNumberCol = ord(piece.col)
-        destinyNumberCol = ord(destinyCol)
+        piece_number_col = ord(piece.col)
+        destiny_number_col = ord(destiny_col)
 
         # get distance from the piece to the position
-        diffX, diffY = board.distance_to_positions(pieceNumberCol, piece.row, destinyNumberCol, destinyRow)
+        diff_x, diff_y = board.distance_to_positions(piece_number_col, piece.row, destiny_number_col, destiny_row)
 
         # get the move direction
-        signalX, signalY = board.direction_to_position(pieceNumberCol, piece.row, destinyNumberCol, destinyRow)
+        signal_x, signal_y = board.direction_to_position(piece_number_col, piece.row, destiny_number_col, destiny_row)
 
         # check range of movement
-        if diffY > 2: 
+        if diff_y > 2: 
             return False
 
-        pieceOnDestiny = board.board[destinyCol][destinyRow]
+        piece_on_destiny = board[(destiny_col, destiny_row)]
 
         # check if there is a piece of the same color in the destination
-        if pieceOnDestiny and pieceOnDestiny.color == piece.color:
+        if piece_on_destiny and piece_on_destiny.color == piece.color:
             return False
 
         # check if diagonal movement is valid
-        if destinyNumberCol != pieceNumberCol and diffX == 1 and diffY == 1 and board.board[destinyCol][destinyRow] != None:
+        if destiny_number_col != piece_number_col and diff_x == 1 and diff_y == 1 and board[(destiny_col, destiny_row)] != None:
             return True
 
         # check if it is a two squares move and if it's a vertical movement
-        if destinyNumberCol != pieceNumberCol or (diffY == 2 and piece.row != 2 and piece.row != 7):
+        if destiny_number_col != piece_number_col or (diff_y == 2 and piece.row != 2 and piece.row != 7):
             return False
 
         # checks for a piece in the path or destination for vertical movement
-        for i in range(1, diffY+1):
-            positionX = chr(pieceNumberCol)
-            positionY = piece.row + (i*signalY)
-            if board.board[positionX][positionY] != None:
+        for i in range(1, diff_y+1):
+            position_x = chr(piece_number_col)
+            position_y = piece.row + (i*signal_y)
+            if board[(position_x, position_y)] != None:
                 return False
 
         return True

@@ -17,11 +17,11 @@ class Piece:
         
     # Move a position piece on the board
     def move(self, board, col, row):
-        existing_piece = board[col][row]
+        existing_piece = board[(col, row)]
         if existing_piece is not None:
             existing_piece.is_dead = True
-        board[self.col][self.row] = None
-        board[col][row] = self
+        board[(self.col, self.row)] = None
+        board[(col, row)] = self
 
         self.col = col
         self.row = row
